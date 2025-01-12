@@ -34,7 +34,22 @@ resource "yandex_compute_instance" "ansible" {
     nat             = each.value.network_interface
   }
 
-  metadata = {
-    for k, v in var.metadata : k => v
-  }
+  # metadata = {
+  #   for k, v in var.metadata : k => v
+  # }
+
+  metadata = merge(
+    {
+      for k, v in var.metadata : k => v
+    },
+    each.value.user_data ? 
+      {
+        "user-data" = <<-EOF
+          #!/bin/bash
+          curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+          apt update -y && apt install -y gitlab-runner
+          snap install docker
+        EOF
+      } : {}
+  )
 }
