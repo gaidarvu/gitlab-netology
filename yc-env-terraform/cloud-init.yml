@@ -1,0 +1,18 @@
+#cloud-config
+users:
+  - name: gaidar
+    groups: sudo
+    shell: /bin/bash
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    ssh_authorized_keys:
+      - ${ssh_authorized_keys}
+package_update: true
+package_upgrade: false
+packages:
+  - vim
+  - wget
+  - curl
+runcmd:
+  - curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+  - apt update -y && apt install -y gitlab-runner
+  - snap install docker
