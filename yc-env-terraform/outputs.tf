@@ -1,16 +1,8 @@
-# output "vpc_subnet_id" {
-#   value = module.devops.vpc_subnet_id
-# }
-# output "vpc_subnet_name" {
-#   value = module.devops.vpc_subnet_name
-# }
-# output "vpc_subnet_zone" {
-#   value = module.devops.vpc_subnet_zone
-# }
-# output "vpc_subnet_v4_cidr_blocks" {
-#   value = module.devops.vpc_subnet_v4_cidr_blocks
-# }
-
-output "details" {
-  value = module.devops.vm_details
+output "vm_details" {
+  value = [
+    for instance in yandex_compute_instance.ansible : {
+      name        = instance.name,
+      ip_address  = instance.network_interface[0].nat_ip_address
+    }
+  ]
 }
