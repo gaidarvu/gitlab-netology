@@ -15,4 +15,6 @@ packages:
 runcmd:
   - curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
   - apt update -y && apt install -y gitlab-runner
-  - snap install docker
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
+  - usermod -aG docker gitlab-runner
