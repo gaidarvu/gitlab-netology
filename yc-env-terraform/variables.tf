@@ -43,13 +43,13 @@ variable "each_vm" {
     }))
   default = {
     "vm1" = {
-      platform_id="standard-v2"
+      platform_id="standard-v3"
       vm_name="gitlab-runner"
       cpu=2
-      ram=1
-      core_fraction=5
+      ram=2
+      core_fraction=20
       type="network-hdd"
-      disk_volume=10
+      disk_volume=20
       network_interface=true
       scheduling_policy=true
       os_family="fd857s9nlophtetqniuu"
